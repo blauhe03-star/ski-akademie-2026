@@ -8,6 +8,7 @@ Enthalten:
 - sturz-komplett.mp4     Das komplette Video, handytauglich komprimiert
 - quiz-anlauf.mp4        Zweites Video bis unmittelbar vor dem Sturz
 - quiz-aufloesung.mp4    Vollständiger zweiter Clip: Frontflips, saubere Landung und Weiterfahrt mit Fury
+- robots.txt             Bittet Suchmaschinen, die Seite nicht zu erfassen
 
 So veröffentlichst du die Seite:
 1. Erstelle auf GitHub ein neues Repository, zum Beispiel "ski-akademie-2026".
@@ -26,3 +27,4 @@ Wichtig:
 - Die Selbsteinschätzung wird nur während des Seitenbesuchs ausgewertet und nirgendwo gespeichert.
 - Der Gutschein wird erst nach einer Antwort auf die finale Video-Frage freigeschaltet.
 - Nur die richtige Antwort startet das Quatschvideo; falsche Antworten müssen erneut beantwortet werden.
+- Die Webseite enthält zusätzlich noindex-Angaben gegen die Aufnahme in Suchergebnisse.

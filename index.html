@@ -1,0 +1,922 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#ff1fb8">
+  <meta name="description" content="Offizielle Eignungsprüfung der Ski-Akademie 2026.">
+  <title>Ski-Akademie 2026 ⛷️</title>
+  <style>
+    :root {
+      --pink: #ff1fb8;
+      --pink-dark: #b60079;
+      --cyan: #00f7ff;
+      --yellow: #fff200;
+      --blue: #2047ff;
+      --ink: #160029;
+      --paper: #fff8fe;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { min-height: 100%; background: #0619a7; }
+
+    body {
+      min-height: 100%;
+      margin: 0;
+      color: var(--ink);
+      overflow-x: hidden;
+      font-family: "Comic Sans MS", "Chalkboard SE", "Marker Felt", cursive;
+      background:
+        radial-gradient(circle at 8% 10%, #fff 0 3px, transparent 4px),
+        radial-gradient(circle at 92% 18%, #fff 0 4px, transparent 5px),
+        repeating-linear-gradient(135deg, #00cbff 0 22px, #ff40bd 22px 44px, #fff200 44px 66px);
+      background-size: 85px 85px, 130px 130px, auto;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background: linear-gradient(180deg, rgba(23, 0, 109, .24), rgba(255, 27, 184, .18));
+    }
+
+    button { font: inherit; }
+
+    .screen {
+      position: relative;
+      z-index: 2;
+      display: none;
+      min-height: 100svh;
+      padding: max(22px, env(safe-area-inset-top)) 18px max(24px, env(safe-area-inset-bottom));
+      place-items: center;
+    }
+
+    .screen.active {
+      display: grid;
+      animation: screen-in .55s cubic-bezier(.2, .8, .2, 1) both;
+    }
+
+    .panel {
+      width: min(680px, 100%);
+      padding: clamp(22px, 5vw, 42px);
+      text-align: center;
+      border: 7px ridge var(--yellow);
+      border-radius: 31px 7px 37px 12px;
+      background: rgba(255, 248, 254, .96);
+      box-shadow: 14px 14px 0 rgba(25, 0, 92, .8), 0 0 0 8px var(--pink), 0 0 44px 14px var(--cyan);
+      transform: rotate(-.35deg);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin: 0 0 13px;
+      padding: 7px 13px;
+      color: #fff;
+      font: 900 .78rem/1.1 Arial, sans-serif;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      background: #1c00a9;
+      border: 3px solid var(--cyan);
+      transform: rotate(1.5deg);
+    }
+
+    h1, h2, p { margin-top: 0; }
+
+    h1 {
+      margin-bottom: 6px;
+      font-size: clamp(2.6rem, 12vw, 6rem);
+      line-height: .88;
+      letter-spacing: -.075em;
+      color: var(--pink);
+      -webkit-text-stroke: 2px var(--ink);
+      text-shadow: 4px 4px 0 var(--yellow), 8px 8px 0 var(--cyan);
+    }
+
+    h2 {
+      margin-bottom: 16px;
+      font-size: clamp(2rem, 8vw, 3.7rem);
+      line-height: .96;
+      color: var(--blue);
+      text-shadow: 3px 3px 0 var(--cyan);
+    }
+
+    .subline {
+      margin: 0 auto 24px;
+      max-width: 34rem;
+      font-size: clamp(1.05rem, 3.8vw, 1.35rem);
+      line-height: 1.45;
+      font-weight: 800;
+    }
+
+    .blink {
+      margin: 18px 0 28px;
+      color: #b00020;
+      font: 900 clamp(.88rem, 3.5vw, 1.05rem)/1.25 Arial, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .09em;
+      animation: blink .75s steps(2, end) infinite;
+    }
+
+    .hero-icons {
+      margin-bottom: 15px;
+      font-size: clamp(2.8rem, 13vw, 5.4rem);
+      filter: drop-shadow(4px 5px 0 var(--cyan));
+      animation: wobble 1.2s ease-in-out infinite alternate;
+    }
+
+    .btn {
+      position: relative;
+      display: inline-flex;
+      min-height: 58px;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 23px;
+      color: #fff;
+      font-size: clamp(1rem, 4vw, 1.28rem);
+      font-weight: 900;
+      line-height: 1.1;
+      text-decoration: none;
+      cursor: pointer;
+      border: 5px outset #ff92db;
+      border-radius: 8px;
+      background: linear-gradient(#ff55c4 0 46%, #cf008c 47% 100%);
+      box-shadow: 0 7px 0 #680045, 0 12px 18px rgba(22, 0, 41, .28);
+      text-shadow: 2px 2px 0 #650043;
+      transition: transform .15s ease, filter .15s ease;
+    }
+
+    .btn:hover { transform: translateY(-2px) scale(1.025) rotate(-1deg); filter: saturate(1.3); }
+    .btn:active { transform: translateY(5px); box-shadow: 0 2px 0 #680045; }
+    .btn:focus-visible { outline: 5px solid var(--cyan); outline-offset: 5px; }
+    .btn.secondary { background: linear-gradient(#31a6ff 0 46%, #1649d6 47% 100%); border-color: #86efff; box-shadow: 0 7px 0 #09226f; }
+    .btn.small { min-height: 42px; padding: 8px 13px; border-width: 3px; font-size: .9rem; box-shadow: 0 4px 0 #09226f; }
+
+    .assessment-form {
+      display: grid;
+      gap: 14px;
+      margin: 20px auto 24px;
+      max-width: 520px;
+      text-align: left;
+    }
+
+    .rating-row {
+      display: grid;
+      grid-template-columns: minmax(130px, 1fr) minmax(130px, 1.2fr) 54px;
+      gap: 12px;
+      align-items: center;
+      padding: 11px 13px;
+      border: 3px solid var(--blue);
+      border-radius: 10px;
+      background: #dffcff;
+      box-shadow: 4px 4px 0 var(--pink);
+      font-weight: 900;
+    }
+
+    .rating-row output {
+      padding: 6px 4px;
+      color: #fff;
+      text-align: center;
+      border: 2px outset #ff94d8;
+      background: var(--pink-dark);
+      font: 900 .95rem/1 Arial, sans-serif;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--pink-dark);
+      cursor: grab;
+    }
+
+    input[type="range"]:active { cursor: grabbing; }
+    input[type="range"]:focus-visible { outline: 4px solid var(--yellow); outline-offset: 4px; }
+
+    .assessment-result {
+      display: none;
+      margin: 22px auto;
+      padding: 17px;
+      color: #fff;
+      border: 5px dashed var(--yellow);
+      background: linear-gradient(135deg, #1c00a9, #c90088);
+      box-shadow: 7px 7px 0 var(--cyan);
+      font-weight: 900;
+      line-height: 1.4;
+    }
+
+    .assessment-result.show { display: block; animation: pop .45s both; }
+    .assessment-result strong { display: block; margin-bottom: 8px; color: var(--yellow); font: 900 1rem/1 Arial, sans-serif; letter-spacing: .1em; text-transform: uppercase; }
+
+    .assessment-next { display: none; }
+    .assessment-next.show { display: inline-flex; animation: pop .45s .15s both; }
+
+    .marquee {
+      position: fixed;
+      z-index: 4;
+      inset: auto 0 0;
+      overflow: hidden;
+      padding: 7px 0 calc(7px + env(safe-area-inset-bottom));
+      color: var(--yellow);
+      background: var(--ink);
+      border-top: 4px dashed var(--cyan);
+      font: 900 .86rem/1 Arial, sans-serif;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .marquee span { display: inline-block; animation: marquee 18s linear infinite; }
+
+    .video-wrap {
+      display: none;
+      margin: 18px auto 16px;
+      width: min(500px, 96%);
+      padding: 8px;
+      border: 6px groove var(--cyan);
+      border-radius: 18px;
+      background: var(--ink);
+      box-shadow: 8px 9px 0 var(--pink);
+      transform: rotate(1deg);
+    }
+
+    .video-wrap.visible { display: block; animation: evidence-in .6s cubic-bezier(.1, .8, .2, 1.25) both; }
+
+    video {
+      display: block;
+      width: 100%;
+      max-height: 62svh;
+      border-radius: 9px;
+      background: #000;
+      object-fit: contain;
+    }
+
+    .sound-row { display: flex; justify-content: center; margin-top: 9px; }
+
+    .video-error {
+      display: none;
+      margin: 10px 0 2px;
+      padding: 10px;
+      color: #fff;
+      font: 800 .86rem/1.35 Arial, sans-serif;
+      background: #b00020;
+      border: 2px dashed var(--yellow);
+    }
+
+    .video-error.show { display: block; }
+    .video-error a { color: var(--yellow); }
+
+    .analysis {
+      display: none;
+      margin: 20px auto;
+      padding: 18px;
+      max-width: 500px;
+      text-align: left;
+      border: 5px double #b60079;
+      background: #fff7ad;
+      box-shadow: 7px 7px 0 #00bec5;
+      transform: rotate(-.8deg);
+    }
+
+    .analysis.visible { display: block; animation: pop .45s .15s both; }
+    .analysis h3 { margin: 0 0 12px; text-align: center; color: #b60000; font: 900 1rem/1 Arial, sans-serif; letter-spacing: .12em; }
+    .score { display: grid; grid-template-columns: 1fr auto; gap: 6px 14px; font-size: clamp(.95rem, 3.5vw, 1.1rem); font-weight: 800; }
+    .score strong { color: var(--pink-dark); }
+    .audit-actions { display: none; margin-top: 23px; }
+    .audit-actions.visible { display: block; animation: pop .45s .28s both; }
+
+    .loader-card { transform: rotate(.3deg); }
+    .loader-title { margin-bottom: 28px; font-size: clamp(1.55rem, 7vw, 2.8rem); }
+
+    .progress-shell {
+      position: relative;
+      height: 44px;
+      margin: 0 auto 14px;
+      overflow: hidden;
+      border: 6px inset #b5b5b5;
+      background: #282828;
+    }
+
+    .progress-bar {
+      width: 0;
+      height: 100%;
+      background: repeating-linear-gradient(135deg, #00ff43 0 14px, #b9ff00 14px 28px);
+      box-shadow: inset 0 0 12px rgba(255,255,255,.8);
+      transition: width .2s linear;
+    }
+
+    .progress-number { font: 900 1.18rem/1 Arial, sans-serif; }
+    .error-box, .approved-box { display: none; margin-top: 22px; padding: 15px; border: 5px dashed; font-weight: 900; }
+    .error-box.show { display: block; color: #fff; border-color: var(--yellow); background: #d80000; animation: shake .35s 2; }
+    .approved-box.show { display: block; color: #001876; border-color: var(--blue); background: var(--cyan); animation: pop .5s both; }
+
+    .quiz-panel {
+      color: #fff;
+      border-color: #f5b8ff;
+      background: radial-gradient(circle at 50% 0, #39229e, #08052f 68%);
+      box-shadow: 14px 14px 0 rgba(0, 0, 0, .8), 0 0 0 8px #6f19df, 0 0 44px 14px #ff25c5;
+    }
+
+    .quiz-panel h2 { color: #fff; text-shadow: 3px 3px 0 #b8008e, 6px 6px 0 #183fc5; }
+    .quiz-panel .subline { color: #dffcff; }
+
+    .quiz-stage {
+      margin: 16px auto 22px;
+      width: min(500px, 96%);
+      padding: 7px;
+      border: 5px ridge #a9edff;
+      border-radius: 15px;
+      background: #000;
+      box-shadow: 7px 8px 0 #e200a3;
+    }
+
+    .quiz-stage video { max-height: 65svh; }
+    .quiz-reveal { display: none; }
+    .quiz-reveal.show { display: block; animation: evidence-in .35s both; }
+    .quiz-intro.hidden { display: none; }
+
+    .quiz-question {
+      display: none;
+      margin-top: 20px;
+      padding: 16px;
+      border: 4px solid #6988ff;
+      border-radius: 18px;
+      background: #12075a;
+      box-shadow: inset 0 0 25px rgba(0, 247, 255, .18);
+    }
+
+    .quiz-question.show { display: block; animation: pop .45s both; }
+    .quiz-question h3 { margin: 0 0 16px; color: #fff; font: 900 clamp(1.25rem, 5vw, 1.8rem)/1.15 Arial, sans-serif; }
+
+    .answers {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .answer {
+      min-height: 70px;
+      padding: 12px;
+      color: #fff;
+      text-align: left;
+      cursor: pointer;
+      border: 3px solid rgba(255,255,255,.8);
+      border-radius: 8px;
+      font: 800 .94rem/1.25 Arial, sans-serif;
+      box-shadow: inset 0 -5px 0 rgba(0,0,0,.24), 3px 4px 0 #000;
+    }
+
+    .answer:nth-child(1) { background: #da244c; }
+    .answer:nth-child(2) { background: #1768ce; }
+    .answer:nth-child(3) { background: #d69700; }
+    .answer:nth-child(4) { background: #228b3d; }
+    .answer:hover { filter: brightness(1.17); transform: scale(1.02); }
+    .answer:disabled { cursor: default; opacity: .55; }
+    .answer.correct { opacity: 1; outline: 5px solid #6dff63; outline-offset: 2px; animation: wobble .35s 3 alternate; }
+    .answer.wrong { opacity: 1; outline: 5px solid #ff173e; outline-offset: 2px; }
+
+    .quiz-feedback {
+      min-height: 1.5em;
+      margin: 15px 0 0;
+      color: var(--yellow);
+      font: 900 1rem/1.3 Arial, sans-serif;
+    }
+
+    .quiz-unlock { display: none; margin-top: 18px; }
+    .quiz-unlock.show { display: inline-flex; animation: pop .45s both; }
+
+    .wrong-overlay {
+      position: fixed;
+      z-index: 20;
+      inset: 0;
+      display: none;
+      place-items: center;
+      padding: 20px;
+      color: #fff;
+      text-align: center;
+      background: rgba(160, 0, 20, .94);
+      border: 18px dashed var(--yellow);
+      font: 900 clamp(3.5rem, 18vw, 10rem)/.85 Arial, sans-serif;
+      text-shadow: 7px 7px 0 #000;
+    }
+
+    .wrong-overlay.show { display: grid; animation: shake .28s 4; }
+    .wrong-overlay small { display: block; margin-top: 24px; font-size: clamp(1.05rem, 4vw, 1.8rem); line-height: 1.2; }
+
+    .gift-panel { overflow: hidden; background: linear-gradient(160deg, #fff 0 48%, #ffe4fa 48% 100%); }
+    .passed { margin: 0 0 10px; color: #008635; font: 900 clamp(1.55rem, 7vw, 2.8rem)/1 Arial, sans-serif; transform: rotate(-2deg); text-shadow: 2px 2px 0 #8dff00; }
+
+    .ticket {
+      position: relative;
+      margin: 25px auto 22px;
+      padding: 26px 20px;
+      color: #fff;
+      border: 5px dashed var(--yellow);
+      border-radius: 18px;
+      background: linear-gradient(135deg, #1c00a9, #6f00a8 48%, #d1008c);
+      box-shadow: 9px 10px 0 var(--cyan);
+      transform: rotate(1.2deg);
+    }
+
+    .ticket::before, .ticket::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background: var(--paper);
+      transform: translateY(-50%);
+    }
+
+    .ticket::before { left: -15px; }
+    .ticket::after { right: -15px; }
+    .ticket-kicker { display: block; margin-bottom: 8px; color: var(--yellow); font: 900 .8rem/1 Arial, sans-serif; letter-spacing: .14em; text-transform: uppercase; }
+    .ticket-main { display: block; font-size: clamp(1.65rem, 7vw, 2.7rem); line-height: 1.02; }
+    .ticket-plus { display: block; margin-top: 14px; font-size: clamp(1rem, 4vw, 1.35rem); line-height: 1.25; }
+    .fine-print { margin: 0 0 24px; font: 700 .82rem/1.4 Arial, sans-serif; color: #550053; }
+    .restart { margin-top: 4px; }
+
+    .snowflake {
+      position: fixed;
+      z-index: 1;
+      top: -10vh;
+      color: #fff;
+      pointer-events: none;
+      text-shadow: 0 0 7px #009dff;
+      animation: snow linear infinite;
+    }
+
+    .status { min-height: 1.5em; }
+
+    @keyframes screen-in { from { opacity: 0; transform: scale(.9) rotate(1deg); } to { opacity: 1; transform: scale(1); } }
+    @keyframes pop { from { opacity: 0; transform: scale(.72) rotate(4deg); } to { opacity: 1; transform: scale(1) rotate(-.8deg); } }
+    @keyframes evidence-in { from { opacity: 0; transform: scale(.65) rotate(-8deg); } to { opacity: 1; transform: scale(1) rotate(1deg); } }
+    @keyframes wobble { from { transform: rotate(-4deg) scale(1); } to { transform: rotate(5deg) scale(1.07); } }
+    @keyframes blink { 50% { opacity: .15; } }
+    @keyframes shake { 25% { transform: translateX(-8px) rotate(-1deg); } 75% { transform: translateX(8px) rotate(1deg); } }
+    @keyframes marquee { from { transform: translateX(100vw); } to { transform: translateX(-100%); } }
+    @keyframes snow { to { transform: translate3d(var(--drift), 115vh, 0) rotate(520deg); } }
+
+    @media (max-height: 760px) {
+      .screen { padding-top: 16px; padding-bottom: 48px; align-items: start; }
+      .panel { padding: 20px 18px; }
+      .hero-icons { font-size: 3rem; margin-bottom: 9px; }
+      .video-wrap { width: min(390px, 94%); margin-top: 12px; }
+      video { max-height: 54svh; }
+      .analysis { margin: 14px auto; padding: 13px; }
+    }
+
+    @media (max-width: 520px) {
+      .rating-row { grid-template-columns: 1fr 50px; gap: 8px 10px; }
+      .rating-row input { grid-column: 1 / -1; grid-row: 2; }
+      .rating-row output { grid-column: 2; grid-row: 1; }
+      .answers { grid-template-columns: 1fr; }
+      .answer { min-height: 58px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
+      .snowflake { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div id="snow" aria-hidden="true"></div>
+
+  <main>
+    <section class="screen active" id="start" aria-labelledby="start-title">
+      <div class="panel">
+        <p class="eyebrow">staatlich fast anerkannt</p>
+        <div class="hero-icons" aria-hidden="true">🎿 💖 ⛷️</div>
+        <h1 id="start-title">Ski-<br>Akademie<br>2026</h1>
+        <p class="subline">Willkommen bei der offiziellsten Vorbereitung auf den Skiurlaub.</p>
+        <p class="blink">⚠ Einlass nur für mutige Nachwuchsprofis ⚠</p>
+        <button class="btn" id="start-button" type="button">✨ Ausbildung beginnen ✨</button>
+      </div>
+    </section>
+
+    <section class="screen" id="self-check" aria-labelledby="self-check-title">
+      <div class="panel">
+        <p class="eyebrow">Eignungsprüfung · streng vertraulich</p>
+        <h2 id="self-check-title">Wie gut bist du wirklich?</h2>
+        <p class="subline">Zeit für eine absolut objektive Selbsteinschätzung. Schummeln ist erlaubt, bringt aber nichts.</p>
+
+        <form class="assessment-form" id="assessment-form">
+          <label class="rating-row">
+            <span>✨ Haltung</span>
+            <input type="range" name="posture" min="0" max="10" value="7">
+            <output>7/10</output>
+          </label>
+          <label class="rating-row">
+            <span>💨 Geschwindigkeit</span>
+            <input type="range" name="speed" min="0" max="10" value="6">
+            <output>6/10</output>
+          </label>
+          <label class="rating-row">
+            <span>🎮 Kontrolle</span>
+            <input type="range" name="control" min="0" max="10" value="7">
+            <output>7/10</output>
+          </label>
+          <label class="rating-row">
+            <span>🍿 Unterhaltungswert</span>
+            <input type="range" name="entertainment" min="0" max="10" value="5">
+            <output>5/10</output>
+          </label>
+          <label class="rating-row">
+            <span>🩹 Überlebensinstinkt</span>
+            <input type="range" name="survival" min="0" max="10" value="8">
+            <output>8/10</output>
+          </label>
+          <button class="btn" type="submit">📋 Angaben amtlich einreichen</button>
+        </form>
+
+        <div class="assessment-result" id="assessment-result" aria-live="polite"></div>
+        <button class="btn secondary assessment-next" id="assessment-next" type="button">Zur unabhängigen Beweisprüfung →</button>
+      </div>
+    </section>
+
+    <section class="screen" id="audit" aria-labelledby="audit-title">
+      <div class="panel">
+        <p class="eyebrow">Eignungsprüfung · Akte 01</p>
+        <h2 id="audit-title">Beweislage prüfen</h2>
+        <p class="subline">Bevor du erneut auf die Piste darfst, müssen wir deine bisherige Leistung analysieren.</p>
+        <button class="btn secondary" id="evidence-button" type="button">📼 Videobeweis anzeigen</button>
+
+        <div class="video-wrap" id="video-wrap">
+          <video id="crash-video" loop muted playsinline webkit-playsinline controls preload="auto" poster="sturz-poster.jpg">
+            <source src="sturz-loop.mp4?v=2" type="video/mp4">
+            Dein Browser kann dieses Meisterwerk leider nicht abspielen.
+          </video>
+          <p class="video-error" id="video-error">Das automatische Abspielen wurde blockiert. Tippe oben im Video auf ▶ – oder <a href="sturz-loop.mp4?v=2">öffne den Clip direkt</a>.</p>
+          <div class="sound-row">
+            <button class="btn small secondary" id="sound-button" type="button" aria-pressed="false">🔇 Originalton aus</button>
+          </div>
+        </div>
+
+        <div class="analysis" id="analysis">
+          <h3>Technische Analyse</h3>
+          <div class="score">
+            <span>Haltung</span><strong id="result-posture">–</strong>
+            <span>Geschwindigkeit</span><strong id="result-speed">–</strong>
+            <span>Kontrolle</span><strong id="result-control">–</strong>
+            <span>Unterhaltungswert</span><strong id="result-entertainment">–</strong>
+            <span>Überlebensrate</span><strong id="result-survival">–</strong>
+          </div>
+        </div>
+
+        <div class="audit-actions" id="audit-actions">
+          <button class="btn" id="exam-button" type="button">Trotzdem zur Prüfung zulassen →</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="loading" aria-labelledby="loading-title" aria-live="polite">
+      <div class="panel loader-card">
+        <div class="hero-icons" aria-hidden="true">🧠⚙️🎿</div>
+        <h2 class="loader-title" id="loading-title">Skifähigkeit wird berechnet…</h2>
+        <div class="progress-shell" role="progressbar" aria-label="Berechnung" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <p class="progress-number" id="progress-number">0 %</p>
+        <div class="error-box status" id="error-box">⚠ FEHLER: Skifähigkeit nicht gefunden.</div>
+        <div class="approved-box status" id="approved-box">Egal. Einladung trotzdem genehmigt. 💅</div>
+      </div>
+    </section>
+
+    <section class="screen" id="prediction" aria-labelledby="prediction-title">
+      <div class="panel quiz-panel">
+        <p class="eyebrow">Finale Sicherheitsfrage · 1.000.000 Gummipunkte</p>
+        <h2 id="prediction-title">Was passiert als Nächstes?</h2>
+        <p class="subline">Das Institut hat das Videomaterial exakt 1,74 Sekunden vor der Katastrophe beschlagnahmt.</p>
+
+        <div class="quiz-stage">
+          <video class="quiz-intro" id="quiz-intro" playsinline webkit-playsinline controls preload="metadata">
+            <source src="quiz-anlauf.mp4?v=1" type="video/mp4">
+          </video>
+          <video class="quiz-reveal" id="quiz-reveal" playsinline webkit-playsinline controls preload="metadata">
+            <source src="quiz-aufloesung.mp4?v=4" type="video/mp4">
+          </video>
+        </div>
+
+        <button class="btn" id="quiz-start" type="button">▶ Schicksalssequenz starten</button>
+
+        <div class="quiz-question" id="quiz-question" aria-live="polite">
+          <h3>Letzte Antwort. Was geschieht jetzt?</h3>
+          <div class="answers">
+            <button class="answer" type="button" data-answer="a">▲ Sie fängt sich und fährt souverän weiter.</button>
+            <button class="answer" type="button" data-answer="b">◆ Eine kontrollierte Vollbremsung.</button>
+            <button class="answer" type="button" data-answer="c">● Elegante Sitzlandung, Haltungsnote 8,5.</button>
+            <button class="answer" type="button" data-answer="chaos">■ Doppelter Frontflip mit Fury.</button>
+          </div>
+          <p class="quiz-feedback" id="quiz-feedback"></p>
+        </div>
+
+        <button class="btn quiz-unlock" id="quiz-unlock" type="button">🎁 Gutschein endlich freischalten</button>
+      </div>
+    </section>
+
+    <section class="screen" id="gift" aria-labelledby="gift-title">
+      <div class="panel gift-panel">
+        <p class="passed">✓ Prüfung bestanden*</p>
+        <div class="hero-icons" aria-hidden="true">🎁❄️💖</div>
+        <h2 id="gift-title">Dein Geschenk</h2>
+        <div class="ticket">
+          <span class="ticket-kicker">Offizielles Ausbildungsprogramm</span>
+          <strong class="ticket-main">1× Tageskarte<br>Skihalle Bottrop</strong>
+          <span class="ticket-plus">+ fragwürdiger Privatunterricht durch Ben</span>
+        </div>
+        <p class="fine-print">* Bestanden aufgrund außergewöhnlicher Unterhaltung, beeindruckender Überlebensrate und persönlicher Sympathie der Prüfungskommission.</p>
+        <button class="btn secondary restart" id="restart-button" type="button">↻ Meisterwerk nochmal ansehen</button>
+      </div>
+    </section>
+  </main>
+
+  <div class="wrong-overlay" id="wrong-overlay" role="alert"><div>FALSCH! ❌<small>Diese Antwort enthält verdächtig viel Realität.<br>Bitte nochmal nachdenken.</small></div></div>
+
+  <div class="marquee" aria-hidden="true"><span>+++ ALLES GUTE ZUM GEBURTSTAG! 🎉 +++ HERZLICHEN GLÜCKWUNSCH! 💖 +++ BOTTROP RUFT +++ BEN ÜBERNIMMT KEINE HAFTUNG +++&nbsp;&nbsp;&nbsp;</span></div>
+
+  <script>
+    const screens = [...document.querySelectorAll('.screen')];
+    const video = document.getElementById('crash-video');
+    const wrap = document.getElementById('video-wrap');
+    const analysis = document.getElementById('analysis');
+    const auditActions = document.getElementById('audit-actions');
+    const evidenceButton = document.getElementById('evidence-button');
+    const soundButton = document.getElementById('sound-button');
+    const videoError = document.getElementById('video-error');
+    const assessmentForm = document.getElementById('assessment-form');
+    const assessmentResult = document.getElementById('assessment-result');
+    const assessmentNext = document.getElementById('assessment-next');
+    const quizIntro = document.getElementById('quiz-intro');
+    const quizReveal = document.getElementById('quiz-reveal');
+    const quizStart = document.getElementById('quiz-start');
+    const quizQuestion = document.getElementById('quiz-question');
+    const quizFeedback = document.getElementById('quiz-feedback');
+    const quizUnlock = document.getElementById('quiz-unlock');
+    const wrongOverlay = document.getElementById('wrong-overlay');
+    let loadingTimers = [];
+    let officialScores = null;
+    let selfScores = null;
+    let quizAnswered = false;
+
+    function showScreen(id) {
+      screens.forEach(screen => screen.classList.toggle('active', screen.id === id));
+      const target = document.getElementById(id);
+      target.querySelector('button, video')?.focus({ preventScroll: true });
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    function playDramaticSting() {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContext) return;
+      const ctx = new AudioContext();
+      const notes = [196, 247, 294, 392, 147];
+      notes.forEach((frequency, index) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = index === notes.length - 1 ? 'sawtooth' : 'square';
+        osc.frequency.value = frequency;
+        gain.gain.setValueAtTime(0.0001, ctx.currentTime + index * .15);
+        gain.gain.exponentialRampToValueAtTime(.07, ctx.currentTime + index * .15 + .025);
+        gain.gain.exponentialRampToValueAtTime(.0001, ctx.currentTime + index * .15 + .27);
+        osc.connect(gain).connect(ctx.destination);
+        osc.start(ctx.currentTime + index * .15);
+        osc.stop(ctx.currentTime + index * .15 + .3);
+      });
+      window.setTimeout(() => ctx.close(), 1600);
+    }
+
+    function resetQuiz() {
+      quizAnswered = false;
+      quizIntro.pause();
+      quizReveal.pause();
+      try { quizIntro.currentTime = 0; } catch (_) {}
+      try { quizReveal.currentTime = 0; } catch (_) {}
+      quizIntro.classList.remove('hidden');
+      quizReveal.classList.remove('show');
+      quizStart.hidden = false;
+      quizQuestion.classList.remove('show');
+      quizFeedback.textContent = '';
+      quizUnlock.classList.remove('show');
+      wrongOverlay.classList.remove('show');
+      document.querySelectorAll('.answer').forEach(button => {
+        button.disabled = false;
+        button.classList.remove('correct', 'wrong');
+      });
+    }
+
+    document.getElementById('start-button').addEventListener('click', () => showScreen('self-check'));
+
+    assessmentForm.querySelectorAll('input[type="range"]').forEach(input => {
+      input.addEventListener('input', () => {
+        input.closest('.rating-row').querySelector('output').textContent = input.value + '/10';
+      });
+    });
+
+    assessmentForm.addEventListener('submit', event => {
+      event.preventDefault();
+      const data = new FormData(assessmentForm);
+      const self = Object.fromEntries([...data.entries()].map(([key, value]) => [key, Number(value)]));
+      selfScores = self;
+      const confidence = (self.posture + self.speed + self.control + self.entertainment + self.survival) / 5;
+
+      officialScores = {
+        posture: Math.max(0, Math.min(10, Math.round(self.posture * .48 + self.control * .12))),
+        speed: Math.max(0, Math.min(10, Math.round(self.speed * .72 + 2))),
+        control: Math.max(0, Math.min(10, Math.round(self.control * .42 - self.speed * .14 + 1))),
+        entertainment: Math.max(6, Math.min(15, Math.round(self.entertainment * .35 + (10 - self.control) * .45 + 8))),
+        survival: Math.max(76, Math.min(100, Math.round(86 + self.survival * 1.25 + self.control * .45 - self.speed * .55)))
+      };
+
+      let verdict;
+      if (confidence >= 7.5) {
+        verdict = 'Selbstvertrauen: Weltcup. Beweislage: wird vorsichtshalber noch geprüft.';
+      } else if (confidence <= 4) {
+        verdict = 'Verdächtig ehrliche Angaben. Die Akademie vermutet eine Falle.';
+      } else {
+        verdict = 'Solides Selbstbild – vermutlich bei sehr guter Sicht und ohne Zeugen erstellt.';
+      }
+
+      const correction = Math.max(17, Math.round((10 - confidence) * 9 + self.speed * 3));
+      assessmentResult.innerHTML = '<strong>Vorläufiges Behördenurteil</strong>' + verdict + '<br><br>Festgestellter Selbstbild-Korrekturfaktor: <u>' + correction + ' %</u>';
+      assessmentResult.classList.add('show');
+      assessmentNext.classList.add('show');
+      assessmentForm.querySelector('button[type="submit"]').textContent = '✓ Angaben wurden gegen dich verwendet';
+      assessmentResult.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+
+    assessmentNext.addEventListener('click', () => showScreen('audit'));
+
+    evidenceButton.addEventListener('click', () => {
+      evidenceButton.hidden = true;
+      wrap.classList.add('visible');
+      analysis.classList.add('visible');
+      auditActions.classList.add('visible');
+      const scores = officialScores || { posture: 2, speed: 6, control: 2, entertainment: 12, survival: 96 };
+      const claimed = selfScores || { posture: '?', speed: '?', control: '?', entertainment: '?', survival: '?' };
+      document.getElementById('result-posture').textContent = claimed.posture + ' behauptet → ' + scores.posture + '/10';
+      document.getElementById('result-speed').textContent = claimed.speed + ' behauptet → ' + scores.speed + '/10';
+      document.getElementById('result-control').textContent = claimed.control + ' behauptet → ' + scores.control + '/10';
+      document.getElementById('result-entertainment').textContent = claimed.entertainment + ' behauptet → ' + scores.entertainment + '/10';
+      document.getElementById('result-survival').textContent = claimed.survival + ' behauptet → ' + scores.survival + ' %';
+      playDramaticSting();
+      videoError.classList.remove('show');
+      const beginPlayback = () => {
+        try { video.currentTime = 0; } catch (_) {}
+        video.play().catch(() => videoError.classList.add('show'));
+      };
+      if (video.readyState >= 2) {
+        beginPlayback();
+      } else {
+        video.load();
+        video.addEventListener('canplay', beginPlayback, { once: true });
+        window.setTimeout(() => {
+          if (video.paused) videoError.classList.add('show');
+        }, 2500);
+      }
+      window.setTimeout(() => wrap.scrollIntoView({ behavior: 'smooth', block: 'center' }), 80);
+    });
+
+    video.addEventListener('playing', () => videoError.classList.remove('show'));
+    video.addEventListener('error', () => videoError.classList.add('show'));
+
+    soundButton.addEventListener('click', () => {
+      video.muted = !video.muted;
+      soundButton.setAttribute('aria-pressed', String(!video.muted));
+      soundButton.textContent = video.muted ? '🔇 Originalton aus' : '🔊 Originalton an';
+      if (video.paused) video.play().catch(() => {});
+    });
+
+    document.getElementById('exam-button').addEventListener('click', () => {
+      video.pause();
+      startLoading();
+    });
+
+    function startLoading() {
+      loadingTimers.forEach(clearTimeout);
+      loadingTimers = [];
+      const bar = document.getElementById('progress-bar');
+      const number = document.getElementById('progress-number');
+      const progress = document.querySelector('[role="progressbar"]');
+      const error = document.getElementById('error-box');
+      const approved = document.getElementById('approved-box');
+      let value = 0;
+      bar.style.width = '0%';
+      number.textContent = '0 %';
+      progress.setAttribute('aria-valuenow', '0');
+      error.classList.remove('show');
+      approved.classList.remove('show');
+      showScreen('loading');
+
+      const interval = window.setInterval(() => {
+        value = Math.min(97, value + Math.ceil(Math.random() * 9));
+        bar.style.width = value + '%';
+        number.textContent = value + ' %';
+        progress.setAttribute('aria-valuenow', String(value));
+        if (value >= 97) {
+          clearInterval(interval);
+          loadingTimers.push(window.setTimeout(() => error.classList.add('show'), 550));
+          loadingTimers.push(window.setTimeout(() => approved.classList.add('show'), 2100));
+          loadingTimers.push(window.setTimeout(() => {
+            resetQuiz();
+            showScreen('prediction');
+          }, 3900));
+        }
+      }, 125);
+      loadingTimers.push(interval);
+    }
+
+    quizStart.addEventListener('click', () => {
+      quizStart.hidden = true;
+      quizIntro.muted = false;
+      try { quizIntro.currentTime = 0; } catch (_) {}
+      quizIntro.play().catch(() => {
+        quizIntro.muted = true;
+        quizIntro.play().catch(() => { quizStart.hidden = false; });
+      });
+    });
+
+    quizIntro.addEventListener('ended', () => {
+      quizQuestion.classList.add('show');
+      quizQuestion.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+
+    document.querySelectorAll('.answer').forEach(button => {
+      button.addEventListener('click', () => {
+        if (quizAnswered) return;
+        const correct = document.querySelector('[data-answer="chaos"]');
+        if (button.dataset.answer !== 'chaos') {
+          button.classList.add('wrong');
+          button.disabled = true;
+          quizFeedback.textContent = '✗ Falsch. Der Videobeweis bleibt gesperrt.';
+          wrongOverlay.classList.add('show');
+          window.setTimeout(() => wrongOverlay.classList.remove('show'), 1450);
+          return;
+        }
+
+        quizAnswered = true;
+        document.querySelectorAll('.answer').forEach(answer => { answer.disabled = true; });
+        correct.classList.add('correct');
+        quizFeedback.textContent = '✓ Natürlich richtig. Fury bestätigt die Antwort persönlich.';
+        playDramaticSting();
+        quizIntro.classList.add('hidden');
+        quizReveal.classList.add('show');
+        quizReveal.muted = true;
+        try { quizReveal.currentTime = 0; } catch (_) {}
+        quizReveal.play().catch(() => {});
+        quizReveal.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    });
+
+    quizReveal.addEventListener('ended', () => {
+      quizUnlock.classList.add('show');
+      quizUnlock.focus({ preventScroll: true });
+    });
+
+    quizUnlock.addEventListener('click', () => showScreen('gift'));
+
+    document.getElementById('restart-button').addEventListener('click', () => {
+      loadingTimers.forEach(clearTimeout);
+      loadingTimers = [];
+      evidenceButton.hidden = false;
+      wrap.classList.remove('visible');
+      analysis.classList.remove('visible');
+      auditActions.classList.remove('visible');
+      video.pause();
+      try { video.currentTime = 0; } catch (_) {}
+      video.muted = true;
+      videoError.classList.remove('show');
+      soundButton.setAttribute('aria-pressed', 'false');
+      soundButton.textContent = '🔇 Originalton aus';
+      officialScores = null;
+      selfScores = null;
+      assessmentResult.classList.remove('show');
+      assessmentResult.innerHTML = '';
+      assessmentNext.classList.remove('show');
+      assessmentForm.reset();
+      assessmentForm.querySelectorAll('input[type="range"]').forEach(input => {
+        input.closest('.rating-row').querySelector('output').textContent = input.value + '/10';
+      });
+      assessmentForm.querySelector('button[type="submit"]').textContent = '📋 Angaben amtlich einreichen';
+      resetQuiz();
+      showScreen('start');
+    });
+
+    const snow = document.getElementById('snow');
+    for (let i = 0; i < 24; i++) {
+      const flake = document.createElement('span');
+      flake.className = 'snowflake';
+      flake.textContent = i % 3 === 0 ? '❄' : '✦';
+      flake.style.left = Math.random() * 100 + 'vw';
+      flake.style.fontSize = (12 + Math.random() * 22) + 'px';
+      flake.style.opacity = .45 + Math.random() * .5;
+      flake.style.animationDuration = (5 + Math.random() * 7) + 's';
+      flake.style.animationDelay = (-Math.random() * 12) + 's';
+      flake.style.setProperty('--drift', (-50 + Math.random() * 100) + 'px');
+      snow.appendChild(flake);
+    }
+  </script>
+</body>
+</html>
